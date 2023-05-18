@@ -23,6 +23,14 @@
         app:layout_constraintTop_toBottomOf="@id/btn_ad_banner"
         android:id="@+id/btn_ad_interstitial"
         android:text="Show Interstitial"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_ad_interstitial"
+        android:id="@+id/btn_ad_open"
+        android:text="Show Open Ad"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

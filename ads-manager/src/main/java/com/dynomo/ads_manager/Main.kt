@@ -8,8 +8,9 @@ import com.dynomo.ads_manager.model.Ad
 import com.dynomo.ads_manager.model.AdSize
 import com.dynomo.ads_manager.model.AdType
 import com.dynomo.ads_manager.store.Store
-import com.dynomo.ads_manager.util.AdMob
-import com.dynomo.ads_manager.util.AdMob.Companion.isEligibleToShowInterstitial
+import com.dynomo.ads_manager.ads.AdMob
+import com.dynomo.ads_manager.ads.AdMob.Companion.isEligibleToShowInterstitial
+import com.dynomo.ads_manager.ads.AdMobOpen
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -23,10 +24,17 @@ const val TAG = "AdsManager"
 class AdsManager {
 
     companion object {
-        fun init(context: Context, ads: List<Ad>, interstitialInterval: Int) {
+        private var adMobOpenInstance: AdMobOpen? = null
+        fun init(context: Context){
+            initGoogleAds(context)
+            adMobOpenInstance = AdMobOpen()
+        }
+
+        fun getOpenAds(): AdMobOpen = adMobOpenInstance as AdMobOpen
+
+        fun setAdsConfig(context: Context, ads: List<Ad>, interstitialInterval: Int) {
             Store.Ads = ads
             Store.interstitialIntervalInSecond = interstitialInterval
-            if (ads.any { it.type == AdType.AdMob }) initGoogleAds(context)
         }
 
         fun showBannerAd(activity: Activity, target: ViewGroup) {

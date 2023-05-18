@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        AdsManager.init(this, ads, 30)
+        AdsManager.setAdsConfig(this, ads, 30)
 
         binding.btnAdBanner.setOnClickListener {
             AdsManager.showBannerAd(this@MainActivity, binding.adBanner)
@@ -33,6 +33,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnAdInterstitial.setOnClickListener {
             AdsManager.showInterstitialAd(this@MainActivity){
                 Toast.makeText(this, "Interstitial Dismissed", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnAdOpen.setOnClickListener {
+            AdsManager.getOpenAds().showAdIfAvailable(this){
+                Toast.makeText(this, "HEHE!", Toast.LENGTH_SHORT).show()
             }
         }
     }

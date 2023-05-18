@@ -1,7 +1,6 @@
-package com.dynomo.ads_manager.util
+package com.dynomo.ads_manager.ads
 
 import android.app.Activity
-import android.util.Log
 import android.view.ViewGroup
 import com.dynomo.ads_manager.store.Store
 import com.google.android.gms.ads.AdSize
