@@ -1,8 +1,9 @@
 package com.dynomo.adsmanager
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.dynomo.ads_manager.AdManager
+import com.dynomo.ads_manager.AdsManager
 import com.dynomo.ads_manager.model.Ad
 import com.dynomo.ads_manager.model.AdSize
 import com.dynomo.ads_manager.model.AdType
@@ -18,14 +19,21 @@ class MainActivity : AppCompatActivity() {
             Ad(
                 type = AdType.AdMob,
                 adSize = AdSize.SMALL,
-                bannerID = "ca-app-pub-3940256099942544/6300978111"
+                bannerID = "ca-app-pub-3940256099942544/6300978111",
+                interstitialID = "ca-app-pub-3940256099942544/1033173712",
             )
         )
 
-        AdManager.init(this, ads)
+        AdsManager.init(this, ads, 30)
 
         binding.btnAdBanner.setOnClickListener {
-            AdManager.showBannerAd(this@MainActivity, binding.adBanner)
+            AdsManager.showBannerAd(this@MainActivity, binding.adBanner)
+        }
+
+        binding.btnAdInterstitial.setOnClickListener {
+            AdsManager.showInterstitialAd(this@MainActivity){
+                Toast.makeText(this, "Interstitial Dismissed", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

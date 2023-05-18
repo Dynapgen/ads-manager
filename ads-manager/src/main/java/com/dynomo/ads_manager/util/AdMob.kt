@@ -1,7 +1,9 @@
 package com.dynomo.ads_manager.util
 
 import android.app.Activity
+import android.util.Log
 import android.view.ViewGroup
+import com.dynomo.ads_manager.store.Store
 import com.google.android.gms.ads.AdSize
 
 class AdMob {
@@ -17,6 +19,11 @@ class AdMob {
 
             val adWidth = (adWidthPixels / density).toInt()
             return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, adWidth)
+        }
+
+        fun isEligibleToShowInterstitial ():Boolean {
+            val timeNowUnix = System.currentTimeMillis()
+            return timeNowUnix - Store.lastInterstitialShowTimeUnix >= Store.interstitialIntervalInSecond * 1000
         }
     }
 }
