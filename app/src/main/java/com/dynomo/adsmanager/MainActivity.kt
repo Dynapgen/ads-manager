@@ -7,6 +7,7 @@ import com.dynomo.ads_manager.AdsManager
 import com.dynomo.ads_manager.model.Ad
 import com.dynomo.ads_manager.model.AdSize
 import com.dynomo.ads_manager.model.AdType
+import com.dynomo.ads_manager.model.NativeAdSize
 import com.dynomo.adsmanager.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +22,8 @@ class MainActivity : AppCompatActivity() {
                 adSize = AdSize.SMALL,
                 bannerID = "ca-app-pub-3940256099942544/6300978111",
                 interstitialID = "ca-app-pub-3940256099942544/1033173712",
-                nativeID =  "ca-app-pub-3940256099942544/2247696110"
+                nativeID =  "ca-app-pub-3940256099942544/2247696110",
+                nativeAdSize = NativeAdSize.MEDIUM
             )
         )
 
