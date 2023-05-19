@@ -1,11 +1,11 @@
-package com.dynomo.ads_manager.ads
+package com.dynomo.ads_manager.ads.admob
 
 import android.app.Activity
 import android.view.ViewGroup
 import com.dynomo.ads_manager.store.Store
 import com.google.android.gms.ads.AdSize
 
-class AdMob {
+internal class Util {
     companion object {
         fun calculateBannerSize (activity: Activity, view: ViewGroup): AdSize {
             val displayMetrics = activity.resources.displayMetrics

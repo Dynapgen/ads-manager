@@ -21,10 +21,11 @@ class MainActivity : AppCompatActivity() {
                 adSize = AdSize.SMALL,
                 bannerID = "ca-app-pub-3940256099942544/6300978111",
                 interstitialID = "ca-app-pub-3940256099942544/1033173712",
+                nativeID =  "ca-app-pub-3940256099942544/2247696110"
             )
         )
 
-        AdsManager.setAdsConfig(this, ads, 30)
+        AdsManager.setAdsConfig(ads, 30)
 
         binding.btnAdBanner.setOnClickListener {
             AdsManager.showBannerAd(this@MainActivity, binding.adBanner)
@@ -37,9 +38,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAdOpen.setOnClickListener {
-            AdsManager.getOpenAds().showAdIfAvailable(this){
-                Toast.makeText(this, "HEHE!", Toast.LENGTH_SHORT).show()
+            AdsManager.showOpenAd(this){
+                Toast.makeText(this, "Open Ad Closed", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.btnAdNative.setOnClickListener {
+            AdsManager.showNativeAd(this, binding.adNative)
         }
     }
 }

@@ -4,3 +4,9 @@ enum class AdSize {
     SMALL,
     MEDIUM
 }
+
+enum class NativeAdSize {
+    SMALL,
+    SMALL_RECTANGLE,
+    MEDIUM,
+}

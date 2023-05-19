@@ -1,7 +1,6 @@
 package com.dynomo.ads_manager.store
 
 import com.dynomo.ads_manager.model.Ad
-import java.util.Date
 
 internal class Store {
     companion object {

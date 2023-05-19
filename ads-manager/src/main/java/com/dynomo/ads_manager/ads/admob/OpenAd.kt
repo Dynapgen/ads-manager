@@ -1,20 +1,14 @@
-package com.dynomo.ads_manager.ads
+package com.dynomo.ads_manager.ads.admob
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 
-interface OnShowAdCompleteListener {
-    fun onShowAdComplete()
-}
-
-class AdMobOpen {
+internal class AdMobOpen {
     private var appOpenAd: AppOpenAd? = null
     private var isLoadingAd = false
     var isShowingAd = false
@@ -39,7 +33,7 @@ class AdMobOpen {
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                    isLoadingAd = false;
+                    isLoadingAd = false
                 }
             })
     }
@@ -58,26 +52,23 @@ class AdMobOpen {
             return
         }
 
-        appOpenAd?.setFullScreenContentCallback(
-            object : FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    appOpenAd = null
-                    isShowingAd = false
+        appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                appOpenAd = null
+                isShowingAd = false
 
-                    Log.d("HEHEHE", "onAdFailedToShowFullScreenContent: DISMISSED" )
-                    onComplete()
-                    loadAd(activity)
-                }
+                onComplete()
+                loadAd(activity)
+            }
 
-                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    appOpenAd = null
-                    isShowingAd = false
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                appOpenAd = null
+                isShowingAd = false
 
-                    Log.d("HEHEHE", "onAdFailedToShowFullScreenContent: " + adError.message)
-                    onComplete()
-                    loadAd(activity)
-                }
-            })
+                onComplete()
+                loadAd(activity)
+            }
+        }
         isShowingAd = true
         appOpenAd?.show(activity)
     }

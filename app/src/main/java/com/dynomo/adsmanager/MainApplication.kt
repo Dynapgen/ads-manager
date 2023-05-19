@@ -8,31 +8,28 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.dynomo.ads_manager.AdsManager
-import com.dynomo.ads_manager.ads.AdMobOpen
 
 class MainApplication: Application(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
     private var currentActivity: Activity? = null
-    private lateinit var openAdManager: AdMobOpen
 
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         AdsManager.init(this)
-        openAdManager = AdsManager.getOpenAds()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
         currentActivity?.let {
-            openAdManager.showAdIfAvailable(it){}
+            AdsManager.showOpenAd(it){}
         }
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
     override fun onActivityStarted(activity: Activity) {
-        if (!openAdManager.isShowingAd) {
+        if (!AdsManager.isOpenAdShowing()) {
             currentActivity = activity
         }
     }
