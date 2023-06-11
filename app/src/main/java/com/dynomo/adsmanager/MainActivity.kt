@@ -7,6 +7,7 @@ import com.dynomo.ads_manager.AdsManager
 import com.dynomo.ads_manager.model.Ad
 import com.dynomo.ads_manager.model.AdSize
 import com.dynomo.ads_manager.model.AdType
+import com.dynomo.ads_manager.model.AdsConfig
 import com.dynomo.ads_manager.model.NativeAdSize
 import com.dynomo.adsmanager.databinding.ActivityMainBinding
 
@@ -27,7 +28,16 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        AdsManager.setAdsConfig(ads, 30)
+        val adsConfig = AdsConfig(
+            ads = ads,
+            enableBanner = false,
+            enableInterstitial = true,
+            enableNative = true,
+            enableOpen = true,
+            enableReward = true,
+        )
+
+        AdsManager.setAdsConfig(adsConfig, 30)
 
         binding.btnAdBanner.setOnClickListener {
             AdsManager.showBannerAd(this@MainActivity, binding.adBanner)

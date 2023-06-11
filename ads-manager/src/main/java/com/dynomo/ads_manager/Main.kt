@@ -11,6 +11,7 @@ import com.dynomo.ads_manager.ads.admob.Util.Companion.isEligibleToShowInterstit
 import com.dynomo.ads_manager.model.Ad
 import com.dynomo.ads_manager.model.AdSize
 import com.dynomo.ads_manager.model.AdType
+import com.dynomo.ads_manager.model.AdsConfig
 import com.dynomo.ads_manager.model.NativeAdSize
 import com.dynomo.ads_manager.store.Store
 import com.google.android.gms.ads.AdListener
@@ -35,13 +36,14 @@ class AdsManager {
             adMobOpenInstance = AdMobOpen()
         }
 
-        fun setAdsConfig(ads: List<Ad>, interstitialInterval: Int) {
-            Store.Ads = ads
+        fun setAdsConfig(adsConfig: AdsConfig, interstitialInterval: Int) {
+            Store.adsConfig = adsConfig
             Store.interstitialIntervalInSecond = interstitialInterval
         }
 
         fun showBannerAd(activity: Activity, target: ViewGroup) {
-            Store.Ads.forEach {
+            if (!Store.adsConfig.enableBanner) return
+            Store.adsConfig.ads.forEach {
                 if (it.type == AdType.AdMob) {
                     kotlin.runCatching {
                         val adView = AdView(activity)
@@ -61,7 +63,8 @@ class AdsManager {
         }
 
         fun showInterstitialAd(activity: Activity, onExit: () -> Unit) {
-            Store.Ads.forEach {
+            if (!Store.adsConfig.enableInterstitial) return
+            Store.adsConfig.ads.forEach {
                 if (!isEligibleToShowInterstitial()) {
                     onExit()
                     return
@@ -93,7 +96,8 @@ class AdsManager {
         }
 
         fun showNativeAd(activity: Activity, target: ViewGroup) {
-            Store.Ads.forEach{
+            if (!Store.adsConfig.enableNative) return
+            Store.adsConfig.ads.forEach{
                 if (it.type == AdType.AdMob) {
                     AdLoader.Builder(activity, it.nativeID)
                         .forNativeAd { ad ->
@@ -125,7 +129,8 @@ class AdsManager {
         }
 
         fun showOpenAd(activity: Activity, onComplete: () -> Unit) {
-            Store.Ads.forEach {
+            if (!Store.adsConfig.enableOpen) return
+            Store.adsConfig.ads.forEach {
                 when (it.type) {
                     AdType.AdMob -> adMobOpenInstance?.showAdIfAvailable(activity, onComplete)
                     else -> return
@@ -135,7 +140,7 @@ class AdsManager {
         }
 
         fun isOpenAdShowing(): Boolean {
-            Store.Ads.forEach { it ->
+            Store.adsConfig.ads.forEach { it ->
                 when (it.type) {
                     AdType.AdMob -> adMobOpenInstance?.let { instance -> if (instance.isShowingAd) return true }
                     else -> {}
