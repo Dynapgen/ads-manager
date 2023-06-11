@@ -5,7 +5,7 @@ import com.dynomo.ads_manager.model.AdsConfig
 
 internal class Store {
     companion object {
-        lateinit var adsConfig: AdsConfig
+        var adsConfig: AdsConfig = AdsConfig()
         var interstitialIntervalInSecond = 0
         var lastInterstitialShowTimeUnix: Long = 0
     }
