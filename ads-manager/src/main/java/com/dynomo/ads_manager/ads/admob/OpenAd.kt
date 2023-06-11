@@ -14,7 +14,7 @@ internal class AdMobOpen {
     var isShowingAd = false
 
     /** Request an ad. */
-    fun loadAd(context: Context) {
+    fun loadAd(context: Context, adId: String) {
         // Do not load ad if there is an unused ad or one is already loading.
         if (isLoadingAd || isAdAvailable()) {
             return
@@ -23,7 +23,7 @@ internal class AdMobOpen {
         isLoadingAd = true
         val request = AdRequest.Builder().build()
         AppOpenAd.load(
-            context, "ca-app-pub-3940256099942544/3419835294", request,
+            context, adId, request,
             AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
             object : AppOpenAd.AppOpenAdLoadCallback() {
 
@@ -41,6 +41,7 @@ internal class AdMobOpen {
     /** Shows the ad if one isn't already showing. */
     fun showAdIfAvailable(
         activity: Activity,
+        adId: String,
         onComplete: () -> Unit) {
         if (isShowingAd) {
             return
@@ -48,7 +49,7 @@ internal class AdMobOpen {
 
         if (!isAdAvailable()) {
             onComplete()
-            loadAd(activity)
+            loadAd(activity, adId)
             return
         }
 
@@ -58,7 +59,7 @@ internal class AdMobOpen {
                 isShowingAd = false
 
                 onComplete()
-                loadAd(activity)
+                loadAd(activity, adId)
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
@@ -66,7 +67,7 @@ internal class AdMobOpen {
                 isShowingAd = false
 
                 onComplete()
-                loadAd(activity)
+                loadAd(activity, adId)
             }
         }
         isShowingAd = true

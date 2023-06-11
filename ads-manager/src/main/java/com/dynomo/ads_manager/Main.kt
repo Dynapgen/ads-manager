@@ -132,7 +132,7 @@ class AdsManager {
             if (!Store.adsConfig.enableOpen) return
             Store.adsConfig.ads.forEach {
                 when (it.type) {
-                    AdType.AdMob -> adMobOpenInstance?.showAdIfAvailable(activity, onComplete)
+                    AdType.AdMob -> adMobOpenInstance?.showAdIfAvailable(activity, it.openID, onComplete)
                     else -> return
                 }
                 return
