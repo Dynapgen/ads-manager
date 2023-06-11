@@ -63,7 +63,10 @@ class AdsManager {
         }
 
         fun showInterstitialAd(activity: Activity, onExit: () -> Unit) {
-            if (!Store.adsConfig.enableInterstitial) return
+            if (!Store.adsConfig.enableInterstitial) {
+                onExit()
+                return
+            }
             Store.adsConfig.ads.forEach {
                 if (!isEligibleToShowInterstitial()) {
                     onExit()
@@ -129,11 +132,17 @@ class AdsManager {
         }
 
         fun showOpenAd(activity: Activity, onComplete: () -> Unit) {
-            if (!Store.adsConfig.enableOpen) return
+            if (!Store.adsConfig.enableOpen) {
+                onComplete()
+                return
+            }
             Store.adsConfig.ads.forEach {
                 when (it.type) {
                     AdType.AdMob -> adMobOpenInstance?.showAdIfAvailable(activity, it.openID, onComplete)
-                    else -> return
+                    else -> {
+                        onComplete()
+                        return
+                    }
                 }
                 return
             }
